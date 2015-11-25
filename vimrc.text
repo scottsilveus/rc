@@ -1,0 +1,132 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set hidden                    " Don't have to save buffer to switch
+set ruler
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-haml'
+Plugin 'bling/vim-airline'
+Plugin 'ervandew/supertab'
+Plugin 'godlygeek/tabular'
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'kien/ctrlp.vim'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+" Pathogen Installs
+execute pathogen#infect()
+
+
+:syntax on
+
+set number
+set backspace=2
+set mouse=a
+:command NE NERDTree
+
+set incsearch
+set hlsearch
+autocmd Filetype html setlocal ts=2 sts=2 sw=2
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+
+autocmd filetype javascript setlocal autoindent
+autocmd filetype javascript setlocal expandtab
+autocmd filetype javascript setlocal shiftwidth=2
+autocmd filetype javascript setlocal tabstop=2
+
+au BufRead,BufNewFile *.coffee set filetype=coffee
+au BufRead,BufNewFile *.coffee.md set filetype=coffee
+
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set wildmode=longest,list,full
+set wildmenu
+set showmatch     " set show matching parenthesis
+
+
+"set cursorcolumn
+"set cursorline
+"if version >= 703
+"if exists('+colorcolumn')
+"  set colorcolumn=80
+"  endif
+
+" UTF-8 Encoding
+set encoding=utf8
+set termencoding=utf-8
+set fileencodings=          " Don't do any encoding conversion
+" Fonts, see http://vimdoc.sourceforge.net/htmldoc/options.html#%27guifontwide%27
+set guifontwide=MingLiU:h10 " Display mixed character sets
+set guifont=Consolas:h11:cANSI
+
+set number        " always show line numbers
+set list
+set history=1000    " remember more commands and search history
+set undolevels=1000 " use many much levels of undo
+
+" Change Buffers
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set splitbelow
+set splitright
+
+" Define characters to show when you show formatting
+" stolen from https://github.com/tpope/vim-sensible
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+  if &termencoding ==# 'utf-8' || &encoding ==# 'utf-8'
+    let &listchars = "tab:\u21e5,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
+  endif
+endif
+
+" another nice listchars configuration
+" set listchars=tab:\|\ ,eol:¬
+" set listchars=eol:¬,tab:>-,trail:.,extends:»,precedes:«
+" set listchars=tab:\|\ ,eol:¬,trail:-,extends:>,precedes:<,nbsp:+
+
+" Delete Trailing White Space
+
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+nnoremap <silent> <C-c> :call <SID>StripTrailingWhitespaces()<CR>

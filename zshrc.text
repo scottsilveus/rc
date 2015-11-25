@@ -1,0 +1,55 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+unsetopt correct_all
+fpath=(~/.zsh $fpath)
+
+export PATH="$HOME/.bin:$PATH"
+
+# recommended by brew doctor
+export PATH="/usr/local/bin:$PATH"
+eval "$(rbenv init - --no-rehash zsh)"
+
+export NVM_DIR="/Users/Scott/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+
+ #   -----------------------------
+ #   2.  MAKE TERMINAL BETTER
+ #   -----------------------------
+ 
+cs() {
+  cd "$@"
+  ls
+}
+
+alias cd=cs
+alias .='cd ../'                         # Go back 1 directory level (for fast typers)
+alias ..='cd ../../'                       # Go back 2 directory levels
+alias .3='cd ../../../'                     # Go back 3 directory levels
+alias .4='cd ../../../../'                  # Go back 4 directory levels
+alias .5='cd ../../../../../'               # Go back 5 directory levels
+alias .6='cd ../../../../../../'            # Go back 6 directory levels
+alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
+alias ~="cd ~"                              # ~:            Go Home
+alias ef="cd ~/src/dscout-efflux"           # ~:            Go dscout-efflux 
+alias dsc="cd ~/src/dscout"                 # ~:            Go dscout
+mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
+
+# Git shortcuts
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias gco='git checkout '
