@@ -1,0 +1,2 @@
+# rc
+vim and zshrc
